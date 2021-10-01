@@ -1,0 +1,64 @@
+<div style="font-size: 2rem;
+      font-weight: 800;
+      background-color: #7b9496;
+      color: white;
+      text-align: center;
+      padding: 1rem 0 1rem 0;
+      ">
+  <h1>STUDENT MANAGEMENT</h1>
+  </div>
+
+  <kendo-upload style="float: inline-end;" [autoUpload]=false (upload)="onUpload($event)"> </kendo-upload>
+
+  <kendo-grid
+    [data]="gridView"
+    [resizable]="true"
+    [height]="380"
+    [pageSize]="pageSize"
+    [skip]="skip"
+    [pageable]="true"
+     (pageChange)="pageChange($event)"
+    (edit)="editHandler($event)"
+    (save)="saveHandler($event)"
+    (add)="addHandler($event)"
+    (cancel)="cancelHandler($event)"
+    (remove)="removeHandler($event)"
+    [sortable]="{
+        allowUnsort: allowUnsort,
+        mode: multiple ? 'multiple' : 'single'
+      }"
+    [sort]="sort"
+    (sortChange)="sortChange($event)"
+  >
+    <ng-template kendoGridToolbarTemplate>
+      <button kendoGridAddCommand>Add Student</button>
+    </ng-template>
+    <kendo-grid-column field="name" title="NAME"> </kendo-grid-column>
+    <kendo-grid-column field="email" title="EMAIL"> </kendo-grid-column>
+    <kendo-grid-column field="age" title="AGE"> </kendo-grid-column>
+    <kendo-grid-column field="dateofbirth" title="DOB">
+      <kendo-datepicker calendarType="classic" [animateCalendarNavigation]="true">
+      </kendo-datepicker> </kendo-grid-column>
+    <kendo-grid-column field="id" title="id" [hidden]="true">
+    </kendo-grid-column>
+
+    <kendo-grid-command-column title="ACTIONS">
+      <ng-template kendoGridCellTemplate let-isNew="isNew">
+        <button kendoGridEditCommand >Edit</button>&nbsp;&nbsp;
+          &nbsp;&nbsp;
+        <button kendoGridRemoveCommand *ngIf="!opened" (click)="open()" [primary]=true>Remove</button>
+        <kendo-dialog *ngIf="opened" [actions]="myActions" (action)="onAction($event)"
+        title="Please confirm" (close)="close('cancel')" [minWidth]="250" [width]="450">
+        <p style="margin: 30px; text-align: center;">
+         Are you sure you want to delete?
+        </p>
+</kendo-dialog>
+        <button kendoGridSaveCommand>{{ isNew ? "Add" : "Update" }}</button>
+
+        <button kendoGridCancelCommand>
+          {{ isNew ? "Discard changes" : "Cancel" }}
+        </button>
+      </ng-template>
+    </kendo-grid-command-column>
+  </kendo-grid>
+

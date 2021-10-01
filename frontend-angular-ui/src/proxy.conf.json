@@ -1,0 +1,12 @@
+{
+  "/backend-graphql-api-service": {
+    "target": "http://localhost:8000/graphql",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/backend-bulljs": {
+    "target": "http://localhost:4001/graphql",
+    "secure": false,
+    "changeOrigin": true
+  }
+}
